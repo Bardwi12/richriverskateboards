@@ -1,0 +1,39 @@
+<% include layouts/header.ejs %>
+
+<div class="container-fluid">
+<div class="row">
+   <div class="col-xs-4 col-xs-offset-4">
+<h2><%= title %></h2>
+
+<form method="post" action="/users/login">
+     
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" class="form-control" placeholder="Username" size="35">
+    </div>
+
+    <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control"  placeholder="Password">
+    </div>
+      <div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button type="submit" class="btn btn-default">Sign in</button>
+    </div>
+
+     <div style="background-color:#f1f1f1">
+    
+    <span class="psw">Forgot <a href="#">password?</a></span>
+    
+    </div>
+</form>
+
+
+</div>
+</div>
+</div>
+
+
+
+
+<% include layouts/footer.ejs %>

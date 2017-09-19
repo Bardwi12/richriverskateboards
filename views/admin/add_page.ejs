@@ -1,0 +1,32 @@
+<%- include('../layouts/adminheader.ejs') %>
+
+
+<h2 class="page-title">Add a page</h2>
+<a href="/admin/pages" class="btn btn-primary">Back </a>
+<br></br>
+
+<form method="post" action="/admin/pages/add-page">
+	
+    <div class="form-group">
+         <label for="">Title</label>
+         <input type="text" class="form-control" name="title" value="<%= title %>" placeholder="Title">
+    </div>
+
+
+    <div class="form-group">
+         <label for="">Subject</label>
+         <input type="text" class="form-control" name="sub" value="<%= sub %>" placeholder="Sub">
+    </div>
+
+    <div class="form-group">
+         <label for="">Content</label>
+         <textarea name="content" class="form-control" id="ta" cols="30" rows="10" placeholder="Content"><%= content %></textarea>
+         
+    </div>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <button class="btn btn-default">Submit</button>
+
+
+</form>
+
+<%- include('../layouts/adminfooter.ejs') %>

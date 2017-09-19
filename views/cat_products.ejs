@@ -1,0 +1,51 @@
+<% include layouts/header.ejs %>
+
+<div class="container-fluid">
+
+<div class="container">
+<div class="row">
+            <div class="col-xs-12 col-md-3">
+                  <h3>Categories</h3>
+                  <ul class="list-group">
+                      <li class="list-group-item"><a href="/products">All products </a>
+                      </li>
+                      <% categories.forEach(function(c){ %>
+                         <li class="list-group-item">
+                         <a href="/products/<%= c.sub %>">
+                         <%= c.title %></a> </li>
+
+                      <% }); %>
+
+                  </ul>
+              </div>
+              <div class="col-xs-12 col-md-1"></div>
+            <div class="col-xs-12 col-md-8">
+            </div>
+
+</div>
+
+
+<div class="row products">
+    
+     <% products.forEach(function(p){ %>
+            <div class="col-xs-12 col-md-4 p">
+                <a class="pa" href="/products/<%= p.category %>/<%= p.sub %>">
+                    <img class="pimage" src="/product_images/<%= p.id %>/<%= p.image %>" alt="">
+                </a>
+                <h3><%= p.title %></h3>
+                <h4>€ &nbsp;<%= parseFloat(p.price).toFixed(2) %></h4>
+                <a class="vd" href="/products/<%= p.category %>/<%= p.sub %>">View Details</a>
+            </div>
+        <% }); %>
+
+    
+</div>
+
+</div>
+</div>
+
+<br>
+<br>
+
+
+<% include layouts/footer.ejs %>

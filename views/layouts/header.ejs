@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <meta charset="utf-8">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+       <title><%= title %></title>
+
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+       <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css" />
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+       <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+       <link rel="stylesheet" href="/css/bootstrap.min.css">
+       <link rel="stylesheet" href="/css/style.css"/>
+       <link rel="stylesheet" href="/css/font-awesome.min.css">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+
+
+    </head>
+
+    
+     
+   
+  
+<body>
+           <div class="paypalgif">
+                  <div class="paypalgifinner">
+                          <h3>You are now being redirected to paypal...</h3>
+                          <img src="/images/ajax-loader.gif" alt=""/>
+                  </div>
+           </div>
+
+
+
+
+  
+    <div class="header-area">
+        <div class="container-fluid"> <!--container-fluid start-->
+          <div class="row"><!--start of row-->
+              <div class="col-md-4">   <!--start of col-->
+                  <div class="social">
+                     <ul>
+                        <li><a href="https://www.facebook.com/Richriverskateboards" target="_blank">
+                        <i class="fa fa-facebook-official" aria-hidden="true"></i></a>
+                        </li>
+                        <li><a href="https://www.youtube.com/Richriverskateboards" target="_blank">
+                        <i class="fa fa-youtube"  aria-hidden="true" ></i></a>
+                        </li>
+                        <li><a href="https://www.instagram.com/Richriver_skateboards" target="_blank">
+                        <i class="fa fa-instagram" aria-hidden="true"></i></a>
+                        </li>
+                        <li><a href="mailto:info@richriverskateboards.com">
+                        <i class="fa fa-envelope-o icon-3x"  aria-hidden="true" ></i></a>
+                       </li>
+                     </ul>
+                  </div>
+                </div><!--end of col-->
+               <div class="col-md-4"><!--start of col-->
+                    <div class="text-heading">
+                        <p>FREE DOMESTIC SHIPPING ON ALL ORDERS ABOVE €100</p>
+                    </div>
+               </div>
+     
+               <div class="col-md-4"><!--start of col-->
+                  <div class="head-part">
+                        <ul>
+                            <li>
+                                <a href="/">
+                                   <i class="fa fa-home icon-3x" style="font-size:18px;" ></i>
+                                </a>
+                            </li>
+           
+                            
+
+                            <% if (user) { %>
+                            <li class="drop">
+                                
+                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">HI, <%= user.username %><span class="caret"></span></a>
+                                     <ul class="dropdown-logout">
+
+                                         
+                                           <li class="logeddout">
+                              
+                                                <a href="/users/logout"> LOG OUT</a>
+                                           </li>
+                                     </ul>
+                                     
+                            </li>
+                            
+                            <% } else {%>
+
+                            <li class="cart-dropdown">
+                                  
+                            <li class=signup>
+                            <a href="/users/login"><i class="fa fa-user" style="font-size:14px;" aria-hidden="true"></i>Log in</a>
+                            </li>         
+                            <li class="signup">
+                                               
+                            <a href="/users/register">Sign up</a>
+                            </li>
+                                              
+                            
+                                       
+                             </li>
+                       
+                              <% } %>
+                              <% if (user && user.admin == 1) { %>
+                              <li><a href="/admin/pages">Admin Area</a></li>
+                              <% }%>
+
+                            <li class= "cart-dropdown">
+                                    <a href="/cart/checkout">
+                                       <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                                          <% if (typeof cart !== "undefined") { %>
+                                         
+
+                                          <%= cart.length %>     
+
+                                           
+                                          <i class="fa fa-caret-down"  aria-hidden="true"></i>
+                              
+
+                            <div class="dropdown-content" id="wrapper">
+
+                                <p><i class="fa fa-shopping-bag" aria-hidden="true" style="color:white"></i><br>YOUR CART</p><br>
+                                            
+                                              
+                                              <% var total = 0; %>
+                                              <% cart.forEach(function(product){ %>
+                                              <% var sub = parseFloat(product.qty * product.price).toFixed(2) %>
+                                              <% total += +sub %>
+
+                                    <div class="container-fluid product-view">
+                                     <div class="row">
+                                
+                                     <div class="col-xs-4"><img class="product_image" src="<%= product.image %>" alt=""></div>
+                                     <div class="col-xs-4"><%= product.title %><br>Qty &nbsp;<%= product.qty %></div>
+                                     
+                                     <div class="col-xs-4">€&nbsp;<%= sub %></div>
+                                   </div>
+                                   </div>
+                     
+                            <% }); %>
+                       
+                                  <div class="container-fluid">
+                                     <div class="row totalcartprice">
+                     
+                     
+                                      <div class="col-xs-6 totalcart"><b>Total: &nbsp;</b></div>
+                                      <div class="col-xs-6 totalcart">€&nbsp;<%= parseFloat(total).toFixed(2) %></div>
+                                     </div>
+   
+                                     <div class="col-md-offset-2 col-md-8 col-sm-12 text-center viewbutton">                            
+                                          <button class="cartbutton">View Cart</button>
+                                     </div>
+                                    </div>
+
+                              </div> 
+
+                                      <% } else {%>
+                                           0
+                                       <i class="fa fa-caret-down"  aria-hidden="true"></i>
+                                        <div class="dropdown-content">
+                                            <p><i class="fa fa-shopping-bag" aria-hidden="true" style="color:white"></i></p>
+
+                                            <p>Your Cart is empty</p>
+                                        </div> 
+                                           <% } %>
+                               
+                            
+                                    </a>
+                             </li>
+                          </ul>
+                       </div><!--end of head-part-->
+                    </div><!--end of col-->
+                  </div><!--end of row-->
+               </div><!--container -fluid end-->
+           </div><!--end of header area-->
+         
+ 
+                            
+
+               <!--logo-->
+
+          
+                  <div class ="container-fluid">
+                    <div class ="row">
+                          <div id="logo" class="desktop-7 tablet-3 mobile-1">
+                                <a href="/">
+                                    <img src="/images/logo.png">
+                                </a>
+                          </div>
+                     </div>
+                   </div>
+                   
+                 <!--logo-->
+
+
+             
+      
+      
+     
+      <nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="197">
+          <div class="container-fluid"> <!--start of container fluid-->
+            <div class="navbar-header" ><!--start of navbar header-->
+             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+             </button>
+           </div> <!--endof navbar header-->        
+      
+          
+          <div class="collapse navbar-collapse" id="navbar" ><!--start of collapse navbar-->
+
+                <!-- <div class="col-md-8">-->
+                    <ul class="nav navbar-nav ">
+                        <% pages.forEach(function(page){ %>
+                        <% if (page.sub == "home") { %>
+                        <li><a href="/"><%= page.title %></a></li>
+                        <% } else {%>
+                        <li><a href="/<%= page.sub %>"><%= page.title %></a></li>
+                        <% } %>
+                        <% }); %>
+                    
+                       <li class="dropdown">
+                          <a href="/" class="dropdown-toggle" data-toggle="dropdown">SHOP<span class="caret"></span></a>
+                          <ul class="dropdown-menu ">
+                               <li class="col-sm-6">
+                                  <ul>
+                                    <li class="dropdown-header">Categories</li>
+                                    <li class="title"><a href="/products">All Products</a></li>
+                                  </ul>
+                               </li> 
+                               <li class="col-sm-6">
+                                  <ul>
+                                    <li class="dropdown-header">Skateboards</li>
+                                    <li class="title"><a href="/products/skateboards">Skateboard Deck</a></li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Apparels</li>
+                                    <li class="title"><a href="/products/t-shirt">T-shirts</a></li> 
+                                 </ul>
+                               </li>
+                          </ul>
+
+                       </li>
+                       <li>
+                               <a href="#team">TEAM</a></li>
+                       <li>
+                               <a href="#about">ABOUT</a></li>
+                       <li>
+                               <a href="/contact">CONTACT US</a></li>
+
+                      </ul>
+                    </div><!--end of collapse navbar-->
+                </div><!--end of container fluid-->
+
+             </nav>
+
+            
+
+                        
+                       
+
+                  <!--  For search bar box 
+                  <div class="col-md-4">
+                  <ul class= "search">
+                 
+                    <li class = "search-nav">
+                      <form class="navbar-form" role="search" action="/products" method= "GET" class= "form-inline">
+                        <div class="input-group add-on">
+                          <input class="form-control" placeholder="Search" name="search" id="search" type="text">
+                            <div class="input-group-btn">
+                              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
+                         </div>
+                     </form>
+                   </li>
+                  </ul>
+                </div>-->
+    
+
+
+          <!-- <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/cart/checkout"><i class="fa fa-shopping-cart" aria-hidden="true"></i> (
+                                <% if (typeof cart !== "undefined") { %>
+                                <%= cart.length %>
+                                <% } else {%>
+                                0
+                                <% } %>
+                            )</a>
+                        </li>
+                        <% if (user) { %>
+                        <li><a href="/users/logout">Hi, <%= user.username %> ( Log Out )</a></li>
+                        <% } else {%>
+                        <li><a href="/users/register">Sign Up</a></li>
+                        <li><a href="/users/login">Sign in</a></li>
+                        <% } %>
+                        <% if (user && user.admin == 1) { %>
+                        <li><a href="/admin/pages">Admin Area</a></li>
+                        <% }%>
+                        
+                    </ul>-->
+             
+     
+     
+      
+        <%- messages('messages', locals) %>
+
+        <% if (errors) {%>
+                <% errors.forEach(function(error) { %>
+                <div class="alert alert-danger">
+                    <%= error.msg %>
+                </div>
+                <% });%>
+            <% }%>
+
+                 
+       
+              
+          
+
+
+
+
+
+
+
+
+
+
+     
+

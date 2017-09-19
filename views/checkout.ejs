@@ -1,0 +1,158 @@
+<% include layouts/header.ejs %>
+
+<% if (typeof cart !== "undefined") { %>
+   
+<div class = container-fluid>
+   <div class = "row">
+     
+      <div class="col-lg-9 col-md-8 col-sm-12 cart-left-cotent clearfix">
+               <div class="heading-wrapper">
+               
+               
+                    <h1 class="page-title">MY SHOPPING CART ITEMS (<%= cart.length %>&nbsp;<% if(cart.length>1){%> Items <%}else{%>Item <%} %>)</h1>
+               
+                
+               </div>
+
+                <div class="product-heading row">
+                    <div class="col-xs-2">PRODUCTS</div>
+                    <div class="col-xs-2">TITLE</div>
+                    <div class="col-xs-2">PRICE</div>
+                    <div class="col-xs-2">QUANTITY</div>
+                    <div class="col-xs-2">EDIT</div>
+                    <div class="col-xs-2">TOTAL AMOUNT</div>
+                </div>
+               
+                 <% var total = 0; %>
+                 <% cart.forEach(function(product){ %>
+                 <% var sub = parseFloat(product.qty * product.price).toFixed(2) %>
+                 <% total += +sub %>
+
+              
+                
+             <div class="cart-contents row">
+         
+                 <div class="col-xs-2"><img class="cart-img" src="<%= product.image %>" alt=""></div>
+                   <div class="col-xs-2"><%= product.title %></div>
+                     <div class="col-xs-2">€&nbsp;<%= product.price %></div>
+                       <div class="col-xs-2"><%= product.qty %></div>
+                         <div class="col-xs-2">
+                           <a href="/cart/update/<%= product.title %>?action=add">+</a>&nbsp;
+                           <a href="/cart/update/<%= product.title %>?action=remove">-</a>&nbsp;
+                           <a href="/cart/update/<%= product.title %>?action=clear">REMOVE</a>&nbsp;
+                         </div>
+                       <div class="col-xs-2">€&nbsp;<%= sub %></div>
+                     </div>
+                    <% }); %>
+              </div>
+
+    
+
+
+   
+  <div class="col-lg-3 col-lg-4 col-lg-12 cart-details-wrapper" style="position:relative; top: 0px; left:0px;">
+            
+            <div class="order-total-summary">
+                   <div class="row price-details"> PRICE DETAILS
+                   </div>
+              <div class="order-summary-span">
+                   <div class="bag-total">
+                         <label>Bag Total</label>
+                          <span class="euro"><%= parseFloat(total).toFixed(2) %> </span>
+                   </div>
+                   <div class="sub-total">
+                         <label>Sub Total</label>
+                         <span class="euro"> </span>
+                   </div>
+
+
+                   <div class="coupon">
+                         <label>Coupon Discount</label>
+                          <span class="euro"><%= parseFloat(total).toFixed(2) %> </span>
+                   </div>
+
+                   <div class="shipping">
+                         <label>Delivery Charges</label>
+                         <span class="euro"> </span>
+                   </div>
+               </div>
+            </div>
+            
+   
+                    <div class="bg-summary">
+                        
+                    </div>
+
+                        <div class="cart-details clearfix">
+                           <div class="col-xs-12 col-xs-12 col-xs-12 col-xxs-12 odr-summary">
+                             <div class="total-amount">TOTAL  &nbsp;&nbsp;
+        
+                            
+                                   <span class="euro">
+                                      <%= parseFloat(total).toFixed(2) %>
+                                   </span>
+
+                            
+                              </div>
+                                    <a class="btn btn-primary buynow action-btn-cyan" href="#">PLACE ORDER</a>
+                     
+                           </div>
+                        </div>
+    </div>
+ </div>  
+
+</div>
+<div class="padding-below">
+
+</div>
+    
+
+
+
+
+
+
+<form class="pp" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_cart">
+<input type="hidden" name="upload" value="1">
+<input type="hidden" name="business" value="bardwibrahma108-facilitator@gmail.com">
+<% var num = 0; %>
+<% cart.forEach(function(p){ %>
+    <% num++ %>
+    <input type="hidden" name="item_name_<%= num %>" value="<%= p.title %>">
+    <input type="hidden" name="amount_<%= num %>" value="<%= p.price %>">
+    <input type="hidden" name="quantity_<%= num %>" value="<%= p.qty %>">
+<% }); %>
+<input type="hidden" name="currency_code" value="EUR">
+<input type="hidden" name="amount" value="<%= total %>">
+<input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+</form>
+
+<% } else {%>
+<h3 class="text-center">Your cart is empty.</h3>
+<% } %>
+
+<script>
+    
+$(function() {
+   
+    $('a.clearcart').on('click', function () {
+        if (!confirm('Confirm clear cart'))
+            return false;
+    });
+    
+    $('a.buynow').on('click', function (e) {
+        e.preventDefault();
+        
+        $.get('/cart/buynow', function() {
+            $('form.pp input[type=image]').click();
+            $('.ajaxbg').show();
+        });
+    });
+        
+});
+    
+</script>
+
+
+<% include layouts/footer.ejs %>
